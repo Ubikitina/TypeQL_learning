@@ -88,3 +88,10 @@ Donwload and installation: https://docs.vaticle.com/docs/studio/overview
 To connect, enter `localhost:1729`.
 
 Quickstart: https://docs.vaticle.com/docs/studio/quickstart
+
+
+# TypeQL Language
+Read here: https://docs.vaticle.com/docs/schema/overview
+
+# TypeDB vs Semantic Web
+https://docs.vaticle.com/docs/comparisons/semantic-web-and-typedb
