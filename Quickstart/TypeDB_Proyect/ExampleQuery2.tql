@@ -1,0 +1,6 @@
+match $tra (traveler: $per) isa travel; 
+$per has full-name $fn; 
+get $tra, $fn;
+
+# Basic example: match $x isa person; get $x;
+
