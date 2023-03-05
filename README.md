@@ -109,4 +109,7 @@ Summarizing, the differences are:
 | Astrazeneca | Disease ontologies for knowledge graphs | Natalja Kurbatova | https://github.com/natacourby/Disease_ontologies_for_knowledge_graphs |
 | Roche | BioGrakn Covid: a Biomedical Knowledge Graph | Konrad Myśliwiec | https://www.youtube.com/watch?v=e-3BITuDgu8&list=PLtEF8_xCPklY3P5NLSQb1SyIYLhQssxfY&index=24 |
 
-I am currently trying to replicate the Astrazeneca "Disease ontologies for knowledge graphs" article. However, the schema file schema.gql is no longer compatible with TypeDB (formerly named Grakn). Therefore, I am rewritting the schema in the file 
+I am currently trying to replicate the Astrazeneca "Disease ontologies for knowledge graphs" article. However, the schema file schema.gql is no longer compatible with TypeDB (formerly named Grakn). Therefore, I am rewritting the schema in the file [schema_rewritten.tql](LifeSciences/schema_rewritten.tql) to solve the compatibility issue. Currently, there are some errors in the rules `preferred-compound-id-chembl-id-rule`, `preferred-compound-id-pubchem-id-rule`, `determine-best-mesh-id-1` and `determine-best-mesh-id-2`. The error message is:
+```
+## Error> [TQL32] TypeQL Error: Rule 'preferred-compound-id-chembl-id-rule' 'then' '$c has preferred-compound-id $cid' tries to assign type 'preferred-compound-id' to variable 'cid', but this variable already had a type assigned by the rule 'when'. Try omitting this type assignment.
+```
