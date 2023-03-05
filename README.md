@@ -95,3 +95,18 @@ Read here: https://docs.vaticle.com/docs/schema/overview
 
 # TypeDB vs Semantic Web
 https://docs.vaticle.com/docs/comparisons/semantic-web-and-typedb
+
+Summarizing, the differences are:
+1. TypeDB is less complex than Semantic Web, as Semantic Web  encompasses different standards (RDF, RDFS, OWL, SACHL, SPARQL). Both maintain a high degree of expressivity. The barrier to entry to TypeDB is, therefore, lower.
+2. RDF models the data in triples, at a low data level. TypeDB includes an entity-relation concept level schema, creating higher order relationships and higher level of abstraction. Therefore, TypeDB makes it easier to work with complex data.
+3. Semantic Web Standards are designed for linked data on an open web. TypeDB is designed to work in closed world systems with private data, like a traditional db.
+
+# TypeDB usage in Life Sciences
+| Company | Description | Contact | URL |
+| ------- | ----------- | ------- | --- |
+| Astrazeneca | Social Graphs for Drug Development | Paul Agapow | https://www.youtube.com/watch?v=9yU8aLfJ9bM& |
+| Vaticle | Enabling the Computational Future of Biology | Tomás Sabat | https://www.youtube.com/watch?v=XJDr_prOp9g&list=PLtEF8_xCPklY3P5NLSQb1SyIYLhQssxfY&index=2 |
+| Astrazeneca | Disease ontologies for knowledge graphs | Natalja Kurbatova | https://github.com/natacourby/Disease_ontologies_for_knowledge_graphs |
+| Roche | BioGrakn Covid: a Biomedical Knowledge Graph | Konrad Myśliwiec | https://www.youtube.com/watch?v=e-3BITuDgu8&list=PLtEF8_xCPklY3P5NLSQb1SyIYLhQssxfY&index=24 |
+
+I am currently trying to replicate the Astrazeneca "Disease ontologies for knowledge graphs" article. However, the schema file schema.gql is no longer compatible with TypeDB (formerly named Grakn). Therefore, I am rewritting the schema in the file 
