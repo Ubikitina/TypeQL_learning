@@ -1,0 +1,305 @@
+define
+
+################
+## ATTRIBUTES ##
+################
+
+source sub attribute, value string;
+score sub attribute, value double;
+molecule-type sub attribute, value string;
+compound-name sub attribute, value string;
+InChIKey sub attribute, value string;
+URL sub attribute, value string;
+disease-name sub attribute, value string;
+
+disease-id sub attribute,
+    abstract,
+    value string,
+    plays disease-id-ontology:disease-id-in-ontology;
+
+ontology-name sub attribute, value string;
+ontology-version sub attribute, value string;
+gene-name sub attribute, value string;
+chromosome sub attribute, value string;
+
+# Attributes under disease-id
+mesh-id sub disease-id;
+efo-id sub disease-id;
+umls-id sub disease-id;
+ncit-id sub disease-id;
+omim-id sub disease-id;
+doid-id sub disease-id;
+orphanet-id sub disease-id;
+hp-id sub disease-id;
+mondo-id sub disease-id;
+icd10-id sub disease-id;
+preferred-disease-id sub disease-id;
+best-mesh-id sub disease-id;
+
+compound-id sub attribute,
+    abstract,
+    value string;
+
+# Attributes under compound-id
+pubchem-id sub compound-id;
+chembl-id sub compound-id;
+drugbank-id sub compound-id;
+preferred-compound-id sub compound-id;
+
+gene-id sub attribute,
+    abstract,
+    value string;
+
+# Attributes under gen-id
+ensembl-id sub gene-id;
+entrez-id sub gene-id;
+uniprot-id sub gene-id;
+
+directness sub attribute, value string,
+    owns source;
+
+interaction-type sub attribute, value string;
+
+
+
+################
+## RELATIONS ##
+################
+
+disease-gene-association sub relation,
+    relates disease-associated-with-gene,
+    relates gene-associated-with-disease,
+    owns directness,
+    owns score,
+    owns source;
+
+gene-compound-association sub relation,
+    relates gene-associated-with-compound,
+    relates compound-associated-with-gene,
+    owns source;
+
+disease-compound-indication sub relation,
+    relates disease-is-indication-for-compound,
+    relates compound-indicated-for-disease,
+    owns source;
+
+disease-hierarchy sub relation,
+    relates superior-disease,
+    relates subordinate-disease,
+    relates ontological-source;
+
+disease-hierarchy-inferred sub relation,
+    relates superior-disease,
+    relates subordinate-disease,
+    relates ontological-source;
+
+disease-id-ontology sub relation,
+    relates disease-id-in-ontology,
+    relates ontological-source;
+
+interaction sub relation,
+    relates gene-source,
+    relates gene-target,
+    owns directness,
+    owns interaction-type;
+
+
+
+
+################
+### ENTITIES ###
+################
+
+disease sub entity,
+    owns disease-name,
+    owns preferred-disease-id @key,
+    owns mesh-id,
+    owns efo-id,
+    owns umls-id,
+    owns ncit-id,
+    owns omim-id,
+    owns doid-id,
+    owns orphanet-id,
+    owns hp-id,
+    owns mondo-id,
+    owns icd10-id,
+    owns best-mesh-id,
+    plays disease-hierarchy:subordinate-disease,
+    plays disease-hierarchy-inferred:subordinate-disease,
+    plays disease-hierarchy:superior-disease,
+    plays disease-hierarchy-inferred:superior-disease,
+    plays disease-gene-association:disease-associated-with-gene,
+    plays disease-compound-indication:disease-is-indication-for-compound;
+
+ontology sub entity,
+    owns ontology-name,
+    owns ontology-version,
+    owns URL,
+    plays disease-hierarchy:ontological-source,
+    plays disease-hierarchy-inferred:ontological-source,
+    plays disease-id-ontology:ontological-source;
+
+compound sub entity,
+    owns compound-name,
+    owns molecule-type,
+    owns chembl-id,
+    owns pubchem-id,
+    owns preferred-compound-id,
+    owns drugbank-id,
+    owns InChIKey,
+    plays gene-compound-association:compound-associated-with-gene,
+    plays disease-compound-indication:compound-indicated-for-disease;
+
+## Ensembl gene, uniprot protein
+gene-protein sub entity,
+    owns gene-name,
+    owns chromosome,
+    owns ensembl-id,
+    owns entrez-id,
+    owns uniprot-id,
+    plays disease-gene-association:gene-associated-with-disease,
+    plays gene-compound-association:gene-associated-with-compound,
+    plays interaction:gene-source,
+    plays interaction:gene-target;
+
+
+
+################
+#### RULES ####
+################
+
+rule preferred-compound-id-chembl-id-rule:
+    when {
+        $c isa compound;
+        $c has chembl-id $cid;
+    } then {
+        $c has preferred-compound-id $cid;
+    };
+
+rule preferred-compound-id-pubchem-id-rule:
+    when {
+        $c isa compound;
+        not{$c has chembl-id $cid;};
+        $c has pubchem-id $pid;
+    } then {
+        $c has preferred-compound-id $pid;
+    };
+
+rule determine-best-mesh-id-1:
+when {
+    $d isa disease;
+    $d has mesh-id $mid;
+} then {
+    $d has best-mesh-id $mid;
+};
+
+rule determine-best-mesh-id-2:
+when {
+    $d1 isa disease;
+    $o isa ontology;
+    not{$d1 has mesh-id $mid1;};
+    $r1(superior-disease: $d2, subordinate-disease: $d1, ontological-source: $o) isa disease-hierarchy;
+    $d2 has mesh-id $mid2;
+    $r2(superior-disease: $d2, subordinate-disease: $d3, ontological-source: $o) isa disease-hierarchy;
+    not{$d3 has mesh-id $mid3;};
+    $r3(superior-disease: $d3, subordinate-disease: $d1, ontological-source: $o) isa disease-hierarchy;
+} then {
+    $d1 has best-mesh-id $mid2;
+};
+
+rule single-ontology-inferred:
+when {
+    $o isa ontology;
+    $r1(superior-disease: $a, subordinate-disease:$b, ontological-source: $o) isa disease-hierarchy;
+} then {
+    (superior-disease: $a, subordinate-disease: $b, ontological-source: $o) isa disease-hierarchy-inferred;
+};
+
+rule single-ontology-transitivity:
+when {
+    $o isa ontology;
+    $r1(superior-disease: $a, subordinate-disease:$b, ontological-source: $o) isa disease-hierarchy-inferred;
+    $r2(superior-disease: $b, subordinate-disease:$c, ontological-source: $o) isa disease-hierarchy-inferred;
+} then {
+    (superior-disease: $a, subordinate-disease: $c, ontological-source: $o) isa disease-hierarchy-inferred;
+};
+
+rule disease-id-ontology-source-mondo:
+when {
+    $o isa ontology, has ontology-name "MONDO";
+    $d isa disease, has mondo-id $did;
+} then {
+    (ontological-source: $o, disease-id-in-ontology: $did) isa disease-id-ontology;
+};
+
+rule disease-id-ontology-source-efo:
+when {
+    $o isa ontology, has ontology-name "EFO";
+    $d isa disease, has efo-id $did;
+} then {
+    (ontological-source: $o, disease-id-in-ontology: $did) isa disease-id-ontology;
+};
+
+rule disease-id-ontology-source-mesh:
+when {
+    $o isa ontology, has ontology-name "MESH";
+    $d isa disease, has mesh-id $did;
+} then {
+    (ontological-source: $o, disease-id-in-ontology: $did) isa disease-id-ontology;
+};
+
+rule disease-id-ontology-source-umls:
+when {
+    $o isa ontology, has ontology-name "UMLS";
+    $d isa disease, has umls-id $did;
+} then {
+    (ontological-source: $o, disease-id-in-ontology: $did) isa disease-id-ontology;
+};
+
+rule disease-id-ontology-source-doid:
+when {
+    $o isa ontology, has ontology-name "DOID";
+    $d isa disease, has doid-id $did;
+} then {
+    (ontological-source: $o, disease-id-in-ontology: $did) isa disease-id-ontology;
+};
+
+rule disease-id-ontology-source-orphanet:
+when {
+    $o isa ontology, has ontology-name "Orphanet";
+    $d isa disease, has orphanet-id $did;
+} then {
+    (ontological-source: $o, disease-id-in-ontology: $did) isa disease-id-ontology;
+};
+
+rule disease-id-ontology-source-ncit:
+when {
+    $o isa ontology, has ontology-name "NCIT";
+    $d isa disease, has ncit-id $did;
+} then {
+    (ontological-source: $o, disease-id-in-ontology: $did) isa disease-id-ontology;
+};
+
+rule disease-id-ontology-source-hp:
+when {
+    $o isa ontology, has ontology-name "HP";
+    $d isa disease, has hp-id $did;
+} then {
+    (ontological-source: $o, disease-id-in-ontology: $did) isa disease-id-ontology;
+};
+
+rule disease-id-ontology-source-omim:
+when {
+    $o isa ontology, has ontology-name "OMIM";
+    $d isa disease, has omim-id $did;
+} then {
+    (ontological-source: $o, disease-id-in-ontology: $did) isa disease-id-ontology;
+};
+
+rule disease-id-ontology-source-icd10:
+when {
+    $o isa ontology, has ontology-name "ICD-10";
+    $d isa disease, has icd10-id $did;
+} then {
+    (ontological-source: $o, disease-id-in-ontology: $did) isa disease-id-ontology;
+};
