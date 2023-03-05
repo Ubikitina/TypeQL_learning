@@ -101,6 +101,8 @@ Summarizing, the differences are:
 2. RDF models the data in triples, at a low data level. TypeDB includes an entity-relation concept level schema, creating higher order relationships and higher level of abstraction. Therefore, TypeDB makes it easier to work with complex data.
 3. Semantic Web Standards are designed for linked data on an open web. TypeDB is designed to work in closed world systems with private data, like a traditional db.
 
+Conclusions about TypeDB: it facilitates both the integration of the data and the access (query), as well as being able to explore the hierarchy. In addition, new ontologies and reasoning rules can be added in a simplified way. It can be a useful tool for the future of bioinformatics and the integration of different ontologies.
+
 # TypeDB usage in Life Sciences
 | Company | Description | Contact | URL |
 | ------- | ----------- | ------- | --- |
