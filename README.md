@@ -106,10 +106,10 @@ Conclusions about TypeDB: it facilitates both the integration of the data and th
 # TypeDB usage in Life Sciences
 | Company | Description | Contact | URL |
 | ------- | ----------- | ------- | --- |
-| Astrazeneca | Social Graphs for Drug Development | Paul Agapow | https://www.youtube.com/watch?v=9yU8aLfJ9bM& |
-| Vaticle | Enabling the Computational Future of Biology | Tomás Sabat | https://www.youtube.com/watch?v=XJDr_prOp9g&list=PLtEF8_xCPklY3P5NLSQb1SyIYLhQssxfY&index=2 |
+| Astrazeneca | Social Graphs for Drug Development | Paul Agapow | [Youtube](https://www.youtube.com/watch?v=9yU8aLfJ9bM&) |
+| Vaticle | Enabling the Computational Future of Biology | Tomás Sabat | [Youtube](https://www.youtube.com/watch?v=XJDr_prOp9g&list=PLtEF8_xCPklY3P5NLSQb1SyIYLhQssxfY&index=2) |
 | Astrazeneca | Disease ontologies for knowledge graphs | Natalja Kurbatova | [GitHub](https://github.com/natacourby/Disease_ontologies_for_knowledge_graphs) / [Youtube](https://www.youtube.com/watch?v=-N2NNVVPULM) / [Article](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-021-04173-w#:~:text=Disease%20ontologies%20for%20knowledge%20graphs%20is%20a%20knowledge,makes%20it%20straightforward%20to%20run%20common%20ontological%20queries) |
-| Roche | BioGrakn Covid: a Biomedical Knowledge Graph | Konrad Myśliwiec | https://www.youtube.com/watch?v=e-3BITuDgu8&list=PLtEF8_xCPklY3P5NLSQb1SyIYLhQssxfY&index=24 |
+| Roche | BioGrakn Covid: a Biomedical Knowledge Graph | Konrad Myśliwiec | [Youtube](https://www.youtube.com/watch?v=e-3BITuDgu8&list=PLtEF8_xCPklY3P5NLSQb1SyIYLhQssxfY&index=24) |
 
 I am currently trying to replicate the Astrazeneca "Disease ontologies for knowledge graphs" article. However, the schema file schema.gql is no longer compatible with TypeDB (formerly named Grakn). Therefore, I am rewritting the schema in the file [schema_rewritten.tql](LifeSciences/schema_rewritten.tql) to solve the compatibility issue. Currently, there are some errors in the rules `preferred-compound-id-chembl-id-rule`, `preferred-compound-id-pubchem-id-rule`, `determine-best-mesh-id-1` and `determine-best-mesh-id-2`. The error message is:
 ```
