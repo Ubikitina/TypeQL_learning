@@ -104,13 +104,15 @@ Summarizing, the differences are:
 Conclusions about TypeDB: it facilitates both the integration of the data and the access (query), as well as being able to explore the hierarchy. In addition, new ontologies and reasoning rules can be added in a simplified way. It can be a useful tool for the future of bioinformatics and the integration of different ontologies.
 
 # TypeDB usage in Life Sciences
-| Company | Description | Contact | URL |
+| Company | Description | Speaker | URL |
 | ------- | ----------- | ------- | --- |
 | Astrazeneca | Social Graphs for Drug Development | Paul Agapow | [Youtube](https://www.youtube.com/watch?v=9yU8aLfJ9bM&) |
 | Vaticle | Enabling the Computational Future of Biology | Tomás Sabat | [Youtube](https://www.youtube.com/watch?v=XJDr_prOp9g&list=PLtEF8_xCPklY3P5NLSQb1SyIYLhQssxfY&index=2) |
 | Astrazeneca | Disease ontologies for knowledge graphs | Natalja Kurbatova | [GitHub](https://github.com/natacourby/Disease_ontologies_for_knowledge_graphs) / [Youtube](https://www.youtube.com/watch?v=-N2NNVVPULM) / [Article](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-021-04173-w#:~:text=Disease%20ontologies%20for%20knowledge%20graphs%20is%20a%20knowledge,makes%20it%20straightforward%20to%20run%20common%20ontological%20queries) |
 | Roche | BioGrakn Covid: a Biomedical Knowledge Graph | Konrad Myśliwiec | [Youtube](https://www.youtube.com/watch?v=e-3BITuDgu8&list=PLtEF8_xCPklY3P5NLSQb1SyIYLhQssxfY&index=24) |
 | Bayer | GraMi, GraEs, and Building GCNN's using TypeDB and PyTorch | Henning Kuich, Dan Plischke, Joren Retel | [Youtube](https://www.youtube.com/watch?v=34AgUujWS10) / [Medium](https://towardsdatascience.com/an-enterprise-data-stack-using-typedb-aa6df12b420b) |
+| Bayer | Loading Huge Amounts of Data #TypeDB #graphdatabase | Henning Kuich | [Youtube](https://www.youtube.com/watch?v=LU27j8fuBVg) |
+| Roche | Use of Hidden Relationships for Novel Target Discovery: A Pilot Study | David Dylus  | [Youtube](https://www.youtube.com/watch?v=9Vtn3xE2cfo) |
 
 I am currently trying to replicate the Astrazeneca "Disease ontologies for knowledge graphs" article. However, the schema file schema.gql is no longer compatible with TypeDB (formerly named Grakn). Therefore, I am rewritting the schema in the file [schema_rewritten.tql](LifeSciences/schema_rewritten.tql) to solve the compatibility issue. Currently, there are some errors in the rules `preferred-compound-id-chembl-id-rule`, `preferred-compound-id-pubchem-id-rule`, `determine-best-mesh-id-1` and `determine-best-mesh-id-2`. The error message is:
 ```
