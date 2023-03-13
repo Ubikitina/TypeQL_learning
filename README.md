@@ -2,6 +2,8 @@
 Repository for recording TypeQL learning
 
 # Documentation
+Context: https://blog.vaticle.com/what-is-a-knowledge-graph-5234363bf7f5
+
 Introduction: https://docs.vaticle.com/docs/general/introduction
 
 Quickstart: https://docs.vaticle.com/docs/general/quickstart
